@@ -1,0 +1,21 @@
+version: '3.3'
+
+services:
+  mongo:
+    image: mongo:latest
+    env_file: .env
+    environment:
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo_data:/data/db
+    networks:
+      - news
+networks:
+  news:
+      driver: bridge
+
+# COMMANDS: docker-compose up -d, docker-compose down
