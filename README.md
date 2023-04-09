@@ -1,6 +1,5 @@
 # News
-REST API for a news article app. <br>
-It's using [Flask](https://flask.palletsprojects.com/en/1.1.x/) and [MongoDB](https://www.mongodb.com/).
+REST API for a news article app created with [Flask](https://flask.palletsprojects.com/en/1.1.x/) and [MongoDB](https://www.mongodb.com/).
 <br>
 <br>
 It has the following endpoints:
