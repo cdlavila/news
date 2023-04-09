@@ -18,13 +18,18 @@ app.config['MONGO_USER'] = os.getenv('MONGO_USER')
 app.config['MONGO_PASSWORD'] = os.getenv('MONGO_PASSWORD')
 
 
-# Create routes
+# Create main routes
 @app.route("/")
-def hello_world():
-    return "<p>Welcome to the news REST API!</p>"
+def server_running():
+    return "<p>News server running!</p>"
 
 
-# Register routes
+@app.route("/api/v1")
+def welcome_api():
+    return "<p>Welcome to the news REST API V1!</p>"
+
+
+# Register other routes
 app.register_blueprint(news_route.routes)
 
 
