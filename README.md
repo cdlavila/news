@@ -1,5 +1,14 @@
 # News
-REST API for a news article app.
+REST API for a news article app. <br>
+It's using [Flask](https://flask.palletsprojects.com/en/1.1.x/) and [MongoDB](https://www.mongodb.com/).
+<br>
+<br>
+It has the following endpoints:
+- `POST /api/v1/news` - Create a new news article
+- `GET /api/v1/news` - Get all news articles
+- `GET /api/v1/news/<id>` - Get a specific news article
+- `PATCH /api/v1/news/<id>` - Update a news article
+- `DELETE /api/v1/news/<id>` - Delete a news article
 
 ## Installation
 1. Clone the repository

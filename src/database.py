@@ -1,17 +1,14 @@
-import os
 from pymongo import MongoClient
-from dotenv import load_dotenv
-
-# Load environment variables
-load_dotenv()
+from src.config import Config
 
 # Connect to the MongoDB instance
 client = MongoClient(
-    host=os.getenv('MONGO_HOST'),
-    port=int(os.getenv('MONGO_PORT')),
-    username=os.getenv('MONGO_USER'),
-    password=os.getenv('MONGO_PASSWORD'))
+    host=Config.MONGO_HOST,
+    port=Config.MONGO_PORT,
+    username=Config.MONGO_USER,
+    password=Config.MONGO_PASSWORD,
+)
 
 # Get the database
 print('Connection to MongoDB successful')
-db = client[os.getenv('MONGO_DATABASE')]
+db = client[Config.MONGO_DATABASE]

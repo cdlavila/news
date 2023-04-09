@@ -1,21 +1,12 @@
-import os
 from flask import Flask
-from dotenv import load_dotenv
+from src.config import Config
 from src.routes import news_route
-
-# Load environment variables
-load_dotenv()
 
 # Create Flask app
 app = Flask(__name__)
 
 # Set up environment variables
-app.config['PORT'] = os.getenv('PORT')
-app.config['MONGO_HOST'] = os.getenv('MONGO_HOST')
-app.config['MONGO_PORT'] = os.getenv('MONGO_PORT')
-app.config['MONGO_DATABASE'] = os.getenv('MONGO_DATABASE')
-app.config['MONGO_USER'] = os.getenv('MONGO_USER')
-app.config['MONGO_PASSWORD'] = os.getenv('MONGO_PASSWORD')
+app.config.from_object(Config)
 
 
 # Create main routes
