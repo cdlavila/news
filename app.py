@@ -11,12 +11,12 @@ app.config.from_object(Config)
 
 # Create main routes
 @app.route("/")
-def server_running():
+def root():
     return "<p>News server running!</p>"
 
 
 @app.route("/api/v1")
-def welcome_api():
+def say_welcome_api():
     return "<p>Welcome to the news REST API V1!</p>"
 
 
