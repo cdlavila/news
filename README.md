@@ -6,7 +6,7 @@ It has the following endpoints:
 - `POST /api/v1/news` - Create a new news article
 - `GET /api/v1/news` - Get all news articles
 - `GET /api/v1/news/<id>` - Get a specific news article
-- `PATCH /api/v1/news/<id>` - Update a news article
+- `PATCH /api/v1/news/<id>` - Update specific fields of a news article
 - `DELETE /api/v1/news/<id>` - Delete a news article
 
 ## Installation
