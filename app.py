@@ -1,6 +1,6 @@
 from flask import Flask
 from src.config import Config
-from src.routes import news_route
+from src.routers import news_router
 
 # Create Flask app
 app = Flask(__name__)
@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 
 
-# Create main routes
+# Create main routers
 @app.route("/")
 def root():
     return "<p>News server running!</p>"
@@ -20,8 +20,8 @@ def say_welcome_api():
     return "<p>Welcome to the news REST API V1!</p>"
 
 
-# Register other routes
-app.register_blueprint(news_route.routes)
+# Register other routers
+app.register_blueprint(news_router.routes)
 
 
 # Run Flask app
