@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from src.config import Config
+from app.config import Config
 
 # Connect to the MongoDB instance
 client = MongoClient(

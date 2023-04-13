@@ -1,5 +1,5 @@
 from flask import Blueprint
-from src.controllers import news_controller
+from app.controllers import news_controller
 
 routes = Blueprint('news_routes', __name__, url_prefix='/api/v1/news')
 

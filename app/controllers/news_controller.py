@@ -1,6 +1,6 @@
 from bson import ObjectId
 from flask import request, jsonify
-from src.database import db
+from app.database import db
 
 
 def create():

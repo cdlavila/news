@@ -1,6 +1,6 @@
 from flask import Flask
-from src.config import Config
-from src.routers import news_router
+from app.config import Config
+from app.routers import news_router
 
 # Create Flask app
 app = Flask(__name__)
