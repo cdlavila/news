@@ -1,21 +1,21 @@
-from bson import ObjectId
-from flask import request, jsonify
-from app.database import db
+from flask import request, jsonify, Blueprint
+from app.services import news_service
+
+news_router = Blueprint('news_routes', __name__)
 
 
-def create():
+@news_router.route('/', methods=['POST'])
+def create_news():
     try:
-        """Create a new news article"""
         payload = request.get_json()
         data = {
             'title': payload.get('title'),
             'description': payload.get('description'),
             'author': payload.get('author'),
         }
-        result = db['news'].insert_one(data)
-        data['_id'] = str(result.inserted_id)
+        created_news = news_service.crate_news(data)
         return jsonify({
-            'data': data,
+            'data': created_news,
             'message': 'News article created successfully'
         }), 201
     except Exception as e:
@@ -26,14 +26,12 @@ def create():
         }), 500
 
 
-def get_all():
+@news_router.route('/', methods=['GET'])
+def get_all_news():
     try:
-        """Get all news articles"""
-        news = list(db['news'].find())
-        for n in news:
-            n['_id'] = str(n['_id'])
+        all_news = news_service.get_all_news()
         return jsonify({
-            'data': news,
+            'data': all_news,
             'message': 'News articles retrieved successfully'
         }), 200
     except Exception as e:
@@ -44,16 +42,15 @@ def get_all():
         }), 500
 
 
-def get_one(id):
+@news_router.route('/<string:id>', methods=['GET'])
+def get_one_news(id):
     try:
-        """Get a single news article"""
-        news = db['news'].find_one({'_id': ObjectId(id)})
+        news = news_service.get_one_news(id)
         if news is None:
             return jsonify({
                 'error': 'Not found',
                 'message': 'News article not found'
             }), 404
-        news['_id'] = str(news['_id'])
         return jsonify({
             'data': news,
             'message': 'News article retrieved successfully'
@@ -66,36 +63,31 @@ def get_one(id):
         }), 500
 
 
-def update(id):
+@news_router.route('/<string:id>', methods=['PATCH'])
+def update_news(id):
     try:
-        """Update a news article"""
-        payload = request.get_json()
-
-        news = db['news'].find_one({'_id': ObjectId(id)})
+        news = news_service.get_one_news(id)
         if news is None:
             return jsonify({
                 'error': 'Not found',
                 'message': 'News article not found'
             }), 404
-        news['_id'] = str(news['_id'])
-
-        data = dict()
-        for key, value in payload.items():
-            if value:
-                data[key] = value
-                news[key] = value
-        result = db['news'].update_one({'_id': ObjectId(id)}, {'$set': data})
-
-        if result.modified_count == 1:
-            return jsonify({
-                'data': news,
-                'message': 'News article updated successfully'
-            }), 200
-        else:
+        payload = request.get_json()
+        data = {
+            'title': payload.get('title'),
+            'description': payload.get('description'),
+            'author': payload.get('author'),
+        }
+        result = news_service.update_news(id, data)
+        if result is None:
             return jsonify({
                 'error': 'Bad Request',
                 'message': 'News article not updated'
             }), 400
+        return jsonify({
+            'data': result.get('news'),
+            'message': 'News article updated successfully'
+        }), 200
     except Exception as e:
         print(e)
         return jsonify({
@@ -104,26 +96,25 @@ def update(id):
         }), 500
 
 
-def delete(id):
+@news_router.route('/<string:id>', methods=['DELETE'])
+def delete_news(id):
     try:
-        """Delete a news article"""
-        news = db['news'].find_one({'_id': ObjectId(id)})
+        news = news_service.get_one_news(id)
         if news is None:
             return jsonify({
                 'error': 'Not found',
                 'message': 'News article not found'
             }), 404
 
-        result = db['news'].delete_one({'_id': ObjectId(id)})
-        if result.deleted_count == 1:
-            return jsonify({
-                'message': 'News article deleted successfully'
-            }), 200
-        else:
+        result = news_service.delete_news(id)
+        if result is None:
             return jsonify({
                 'error': 'Bad Request',
                 'message': 'News article not deleted'
             }), 400
+        return jsonify({
+            'message': 'News article deleted successfully'
+        }), 200
     except Exception as e:
         print(e)
         return jsonify({

@@ -1,6 +1,6 @@
 from flask import Flask
 from app.config import Config
-from app.routers import news_router
+from app.controllers.news_controller import news_router
 
 # Create Flask app
 app = Flask(__name__)
@@ -21,7 +21,7 @@ def say_welcome_api():
 
 
 # Register other routers
-app.register_blueprint(news_router.routes)
+app.register_blueprint(news_router, url_prefix='/api/v1/news')
 
 
 # Run Flask app
