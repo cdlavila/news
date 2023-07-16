@@ -17,3 +17,7 @@ It has the following endpoints:
 5. Run `source venv/bin/activate`
 6. Run `pip3 install -r requirements.txt`
 7. Run `python3 app.py`
+
+## Linter
+1. Run `pylint filename.py` to run the linter on a specific file
+2. Run `pylint foldername` to run the linter on a specific folder
