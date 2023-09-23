@@ -1,12 +1,16 @@
 from flask import Flask
 from app.config import Config
 from app.controllers.news_controller import news_router
+from flask_cors import CORS
 
 # Create Flask app
 app = Flask(__name__)
 
 # Set up environment variables
 app.config.from_object(Config)
+
+# Configure CORS
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 # Create main routers
